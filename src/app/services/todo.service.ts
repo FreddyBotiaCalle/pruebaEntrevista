@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 import { Todo, CreateTodoDTO, UpdateTodoDTO } from '../models/todo.model';
+import { APP_CONSTANTS } from '../core/constants/app.constants';
+import { generateUniqueId } from '../core/utils/helpers';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
   private todos$ = new BehaviorSubject<Todo[]>([]);
-  private storageKey = 'todos';
+  private storageKey = APP_CONSTANTS.STORAGE_KEY;
   private initialized = false;
 
   constructor(private storage: Storage) {
@@ -188,6 +190,6 @@ export class TodoService {
    * Generar ID único
    */
   private generateId(): string {
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return generateUniqueId();
   }
 }
