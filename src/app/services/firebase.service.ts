@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getRemoteConfig, fetchAndActivate } from 'firebase/remote-config';
+import { getRemoteConfig, fetchAndActivate, getValue } from 'firebase/remote-config';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoggerService } from './logger.service';
 
@@ -69,7 +69,7 @@ export class FirebaseService {
 
       // Inicializar Remote Config
       this.remoteConfig = getRemoteConfig(firebaseApp);
-      this.remoteConfig.settings.minimumFetchIntervalMillis = 3600000; // 1 hora
+      this.remoteConfig.settings.minimumFetchIntervalMillis = 30000; // 30 segundos (para desarrollo)
       this.remoteConfig.settings.fetchTimeoutMillis = 60000; // 60 segundos
 
       // Establecer valores por defecto
@@ -94,27 +94,77 @@ export class FirebaseService {
   async loadRemoteConfig(): Promise<void> {
     try {
       if (!this.remoteConfig) {
+        this.logger.warn('Remote Config no está disponible, usando valores por defecto');
         this.featureFlags$.next(this.defaultConfig);
         return;
       }
 
-      this.logger.info('Cargando Remote Config');
-      await fetchAndActivate(this.remoteConfig);
-
-      // Obtener los valores usando la API correcta
-      const allValues = this.remoteConfig.getAll();
+      this.logger.info('🔄 Iniciando carga de Remote Config desde Firebase...');
       
-      const flags = {
-        categoriesEnabled: allValues['categoriesEnabled'] ? JSON.parse(allValues['categoriesEnabled'].asString()) : this.defaultConfig.categoriesEnabled,
-        maxTodosPerUser: allValues['maxTodosPerUser'] ? parseInt(allValues['maxTodosPerUser'].asString(), 10) : this.defaultConfig.maxTodosPerUser,
-        enableNotifications: allValues['enableNotifications'] ? JSON.parse(allValues['enableNotifications'].asString()) : this.defaultConfig.enableNotifications,
-        maintenanceMode: allValues['maintenanceMode'] ? JSON.parse(allValues['maintenanceMode'].asString()) : this.defaultConfig.maintenanceMode,
+      // Hacer fetch de Firebase
+      const status = await fetchAndActivate(this.remoteConfig);
+      this.logger.info(`✅ fetchAndActivate completado. Status: ${status}`);
+
+      // Obtener los valores usando la API correcta de Firebase
+      // Los valores en Remote Config pueden ser strings, así que intentamos parsearlos
+      // Usar la API modular de Firebase Remote Config v9+
+      // getValue(remoteConfig, key).asString()
+      // Importa getValue arriba si no está
+      const getCategoryEnabled = (): boolean => {
+        try {
+          const val = getValue(this.remoteConfig, 'categoriesEnabled').asString();
+          this.logger.debug(`categoriesEnabled (raw): ${val}`);
+          return val === 'true' || val === '1';
+        } catch (e) {
+          this.logger.warn(`Error obteniendo categoriesEnabled: ${e}`);
+          return this.defaultConfig.categoriesEnabled;
+        }
       };
 
-      this.logger.info('Feature flags cargados:', flags);
+      const getMaxTodos = (): number => {
+        try {
+          const val = getValue(this.remoteConfig, 'maxTodosPerUser').asString();
+          this.logger.debug(`maxTodosPerUser (raw): ${val}`);
+          return parseInt(val, 10) || this.defaultConfig.maxTodosPerUser;
+        } catch (e) {
+          this.logger.warn(`Error obteniendo maxTodosPerUser: ${e}`);
+          return this.defaultConfig.maxTodosPerUser;
+        }
+      };
+
+      const getEnableNotifications = (): boolean => {
+        try {
+          const val = getValue(this.remoteConfig, 'enableNotifications').asString();
+          this.logger.debug(`enableNotifications (raw): ${val}`);
+          return val === 'true' || val === '1';
+        } catch (e) {
+          this.logger.warn(`Error obteniendo enableNotifications: ${e}`);
+          return this.defaultConfig.enableNotifications;
+        }
+      };
+
+      const getMaintenanceMode = (): boolean => {
+        try {
+          const val = getValue(this.remoteConfig, 'maintenanceMode').asString();
+          this.logger.debug(`maintenanceMode (raw): ${val}`);
+          return val === 'true' || val === '1';
+        } catch (e) {
+          this.logger.warn(`Error obteniendo maintenanceMode: ${e}`);
+          return this.defaultConfig.maintenanceMode;
+        }
+      };
+
+      const flags = {
+        categoriesEnabled: getCategoryEnabled(),
+        maxTodosPerUser: getMaxTodos(),
+        enableNotifications: getEnableNotifications(),
+        maintenanceMode: getMaintenanceMode(),
+      };
+
+      this.logger.info('✅ Feature flags cargados desde Firebase:', flags);
       this.featureFlags$.next(flags);
     } catch (error) {
-      this.logger.error('Error cargando Remote Config', error);
+      this.logger.error('❌ Error cargando Remote Config:', error);
       this.featureFlags$.next(this.defaultConfig);
     }
   }
