@@ -102,10 +102,10 @@ export class FirebaseService {
       await fetchAndActivate(this.remoteConfig);
 
       const flags = {
-        categoriesEnabled: this.remoteConfig.getBoolean('categoriesEnabled'),
-        maxTodosPerUser: this.remoteConfig.getNumber('maxTodosPerUser'),
-        enableNotifications: this.remoteConfig.getBoolean('enableNotifications'),
-        maintenanceMode: this.remoteConfig.getBoolean('maintenanceMode'),
+        categoriesEnabled: this.remoteConfig.getValue('categoriesEnabled').asBoolean(),
+        maxTodosPerUser: this.remoteConfig.getValue('maxTodosPerUser').asNumber(),
+        enableNotifications: this.remoteConfig.getValue('enableNotifications').asBoolean(),
+        maintenanceMode: this.remoteConfig.getValue('maintenanceMode').asBoolean(),
       };
 
       this.logger.info('Feature flags cargados:', flags);
