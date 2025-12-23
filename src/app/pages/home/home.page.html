@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Blank
+      Gestor de Tareas
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,53 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Mi Lista de Tareas</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Estadísticas -->
+  <ion-card>
+    <ion-card-content>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center;">
+        <div>
+          <h3>{{ stats.total }}</h3>
+          <p>Total</p>
+        </div>
+        <div>
+          <h3 style="color: var(--ion-color-success);">{{ stats.completed }}</h3>
+          <p>Completadas</p>
+        </div>
+        <div>
+          <h3 style="color: var(--ion-color-warning);">{{ stats.pending }}</h3>
+          <p>Pendientes</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Formulario para crear tareas -->
+  <app-todo-form></app-todo-form>
+
+  <!-- Filtros -->
+  <app-todo-filters
+    [searchTerm]="searchTerm"
+    [filterType]="filterType"
+    (searchTermChange)="onSearchChange($event)"
+    (filterTypeChange)="onFilterChange($event)"
+  ></app-todo-filters>
+
+  <!-- Lista de tareas filtrada -->
+  <app-todo-list
+    [todos]="filteredTodos"
+    (deleteTodo)="onDeleteTodo($event)"
+    (toggleTodo)="onToggleTodo($event)"
+    (editTodo)="onEditTodo($event)"
+  ></app-todo-list>
+
+  <!-- Botón para limpiar completadas -->
+  <div *ngIf="stats.completed > 0" style="padding: 1rem; text-align: center;">
+    <ion-button expand="block" color="danger" (click)="clearCompleted()">
+      Eliminar Tareas Completadas
+    </ion-button>
   </div>
 </ion-content>

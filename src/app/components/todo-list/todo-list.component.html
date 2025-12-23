@@ -1,0 +1,38 @@
+<ion-card *ngIf="todos.length > 0">
+  <ion-card-header>
+    <ion-card-title>Mis Tareas ({{ todos.length }})</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let todo of todos" lines="inset">
+        <ion-checkbox
+          slot="start"
+          [checked]="todo.completed"
+          (ionChange)="onToggle(todo.id)"
+          color="primary"
+        ></ion-checkbox>
+
+        <ion-label>
+          <h2 [class.completed]="todo.completed">{{ todo.title }}</h2>
+          <p *ngIf="todo.description">{{ todo.description }}</p>
+          <p *ngIf="todo.dueDate" style="font-size: 0.8rem; color: var(--ion-color-medium);">
+            Vencimiento: {{ formatDate(todo.dueDate) }}
+          </p>
+        </ion-label>
+
+        <div slot="end" style="display: flex; gap: 0.5rem;">
+          <ion-button fill="clear" color="warning" (click)="onEdit(todo)">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="onDelete(todo.id)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<div *ngIf="todos.length === 0" style="text-align: center; padding: 2rem; color: var(--ion-color-medium);">
+  <p>No hay tareas. ¡Crea una nueva!</p>
+</div>

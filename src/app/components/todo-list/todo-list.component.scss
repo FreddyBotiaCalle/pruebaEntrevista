@@ -1,0 +1,9 @@
+h2.completed {
+  text-decoration: line-through;
+  color: var(--ion-color-medium);
+}
+
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+}

@@ -1,0 +1,18 @@
+<ion-searchbar
+  [value]="searchTerm"
+  (ionInput)="onSearchChange($event.target.value || '')"
+  placeholder="Buscar tareas..."
+  debounce="300"
+></ion-searchbar>
+
+<ion-segment [value]="filterType" (ionChange)="onFilterChange($event.detail.value)">
+  <ion-segment-button value="all">
+    <ion-label>Todas</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="pending">
+    <ion-label>Pendientes</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="completed">
+    <ion-label>Completadas</ion-label>
+  </ion-segment-button>
+</ion-segment>
