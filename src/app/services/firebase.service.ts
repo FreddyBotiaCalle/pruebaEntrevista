@@ -101,11 +101,14 @@ export class FirebaseService {
       this.logger.info('Cargando Remote Config');
       await fetchAndActivate(this.remoteConfig);
 
+      // Obtener los valores usando la API correcta
+      const allValues = this.remoteConfig.getAll();
+      
       const flags = {
-        categoriesEnabled: this.remoteConfig.getValue('categoriesEnabled').asBoolean(),
-        maxTodosPerUser: this.remoteConfig.getValue('maxTodosPerUser').asNumber(),
-        enableNotifications: this.remoteConfig.getValue('enableNotifications').asBoolean(),
-        maintenanceMode: this.remoteConfig.getValue('maintenanceMode').asBoolean(),
+        categoriesEnabled: allValues['categoriesEnabled'] ? JSON.parse(allValues['categoriesEnabled'].asString()) : this.defaultConfig.categoriesEnabled,
+        maxTodosPerUser: allValues['maxTodosPerUser'] ? parseInt(allValues['maxTodosPerUser'].asString(), 10) : this.defaultConfig.maxTodosPerUser,
+        enableNotifications: allValues['enableNotifications'] ? JSON.parse(allValues['enableNotifications'].asString()) : this.defaultConfig.enableNotifications,
+        maintenanceMode: allValues['maintenanceMode'] ? JSON.parse(allValues['maintenanceMode'].asString()) : this.defaultConfig.maintenanceMode,
       };
 
       this.logger.info('Feature flags cargados:', flags);
