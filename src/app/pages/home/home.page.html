@@ -1,61 +1,91 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title>
-      Gestor de Tareas
+      Prueba Entrevista
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Mi Lista de Tareas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Loading State -->
+  <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="text-align: center;">
+      <ion-spinner></ion-spinner>
+      <p style="margin-top: 1rem;">Cargando tareas...</p>
+    </div>
+  </div>
 
-  <!-- Estadísticas -->
-  <ion-card>
-    <ion-card-content>
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center;">
-        <div>
-          <h3>{{ stats.total }}</h3>
-          <p>Total</p>
+  <!-- Main Content -->
+  <div *ngIf="!isLoading" style="padding: 1rem;">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Mi Lista de Tareas</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <!-- Estadísticas -->
+    <ion-card>
+      <ion-card-content>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center;">
+          <div>
+            <h3>{{ stats.total }}</h3>
+            <p>Total</p>
+          </div>
+          <div>
+            <h3 style="color: var(--ion-color-success);">{{ stats.completed }}</h3>
+            <p>Completadas</p>
+          </div>
+          <div>
+            <h3 style="color: var(--ion-color-warning);">{{ stats.pending }}</h3>
+            <p>Pendientes</p>
+          </div>
         </div>
-        <div>
-          <h3 style="color: var(--ion-color-success);">{{ stats.completed }}</h3>
-          <p>Completadas</p>
-        </div>
-        <div>
-          <h3 style="color: var(--ion-color-warning);">{{ stats.pending }}</h3>
-          <p>Pendientes</p>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
 
-  <!-- Formulario para crear tareas -->
-  <app-todo-form></app-todo-form>
+    <!-- Feature Flags -->
+    <app-feature-flags></app-feature-flags>
 
-  <!-- Filtros -->
-  <app-todo-filters
-    [searchTerm]="searchTerm"
-    [filterType]="filterType"
-    (searchTermChange)="onSearchChange($event)"
-    (filterTypeChange)="onFilterChange($event)"
-  ></app-todo-filters>
+    <!-- Gestión de Categorías -->
+    <div *ngIf="categoriesEnabled">
+      <app-category-list
+        [categories]="categories"
+        (createCategory)="onCreateCategory()"
+        (editCategory)="onEditCategory($event)"
+      ></app-category-list>
+    </div>
 
-  <!-- Lista de tareas filtrada -->
-  <app-todo-list
-    [todos]="filteredTodos"
-    (deleteTodo)="onDeleteTodo($event)"
-    (toggleTodo)="onToggleTodo($event)"
-    (editTodo)="onEditTodo($event)"
-  ></app-todo-list>
+    <!-- Mensaje cuando categorías están deshabilitadas -->
+    <div *ngIf="!categoriesEnabled" style="padding: 1rem; background-color: #fff3cd; border-radius: 0.5rem; margin-bottom: 1rem;">
+      <p style="margin: 0; color: #856404;">ℹ️ La funcionalidad de categorías está deshabilitada en este momento.</p>
+    </div>
 
-  <!-- Botón para limpiar completadas -->
-  <div *ngIf="stats.completed > 0" style="padding: 1rem; text-align: center;">
-    <ion-button expand="block" color="danger" (click)="clearCompleted()">
-      Eliminar Tareas Completadas
-    </ion-button>
+    <!-- Formulario para crear tareas -->
+    <app-todo-form></app-todo-form>
+
+    <!-- Filtros -->
+    <app-todo-filters
+      [searchTerm]="searchTerm"
+      [filterType]="filterType"
+      [selectedCategoryId]="selectedCategoryId"
+      (searchTermChange)="onSearchChange($event)"
+      (filterTypeChange)="onFilterChange($event)"
+      (categoryFilterChange)="onCategoryFilterChange($event)"
+    ></app-todo-filters>
+
+    <!-- Lista de tareas filtrada -->
+    <app-todo-list
+      [todos]="filteredTodos"
+      (deleteTodo)="onDeleteTodo($event)"
+      (toggleTodo)="onToggleTodo($event)"
+      (editTodo)="onEditTodo($event)"
+    ></app-todo-list>
+
+    <!-- Botón para limpiar completadas -->
+    <div *ngIf="stats.completed > 0" style="padding: 1rem; text-align: center;">
+      <ion-button expand="block" color="danger" (click)="clearCompleted()">
+        Eliminar Tareas Completadas
+      </ion-button>
+    </div>
   </div>
 </ion-content>

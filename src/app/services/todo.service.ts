@@ -18,9 +18,55 @@ export class TodoService {
   }
 
   async init() {
-    await this.storage.create();
-    await this.loadTodos();
-    this.initialized = true;
+    try {
+      await this.storage.create();
+      await this.loadTodos();
+      
+      // Si no hay tareas, crear datos de ejemplo
+      if (this.getTodosValue().length === 0) {
+        await this.createSampleData();
+      }
+      
+      this.initialized = true;
+    } catch (error) {
+      console.error('Error inicializando TodoService:', error);
+      this.initialized = true; // Permitir que continúe aunque falle
+    }
+  }
+
+  /**
+   * Crear datos de ejemplo
+   */
+  private async createSampleData(): Promise<void> {
+    const sampleTodos: CreateTodoDTO[] = [
+      {
+        title: 'Completar proyecto Angular',
+        description: 'Terminar la implementación del proyecto TODO App',
+      },
+      {
+        title: 'Revisar documentación',
+        description: 'Leer y actualizar la documentación del proyecto',
+      },
+      {
+        title: 'Hacer testing',
+        description: 'Escribir tests unitarios para los servicios',
+      },
+      {
+        title: 'Desplegar aplicación',
+        description: 'Publicar la aplicación en producción',
+      },
+    ];
+
+    for (const todo of sampleTodos) {
+      await this.createTodo(todo);
+    }
+  }
+
+  /**
+   * Verificar si el servicio está inicializado
+   */
+  isInitialized(): boolean {
+    return this.initialized;
   }
 
   /**
@@ -149,7 +195,8 @@ export class TodoService {
   filterTodos(
     todos: Todo[],
     searchTerm: string = '',
-    filterType: 'all' | 'pending' | 'completed' = 'all'
+    filterType: 'all' | 'pending' | 'completed' = 'all',
+    categoryId: string = ''
   ): Todo[] {
     let filtered = todos;
 
@@ -158,6 +205,11 @@ export class TodoService {
       filtered = filtered.filter((t) => !t.completed);
     } else if (filterType === 'completed') {
       filtered = filtered.filter((t) => t.completed);
+    }
+
+    // Aplicar filtro por categoría
+    if (categoryId.trim()) {
+      filtered = filtered.filter((t) => t.categoryId === categoryId);
     }
 
     // Aplicar búsqueda

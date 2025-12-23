@@ -40,6 +40,16 @@
       ></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label position="floating">Categoría</ion-label>
+      <ion-select formControlName="categoryId" placeholder="Selecciona una categoría (opcional)">
+        <ion-select-option value="">Sin categoría</ion-select-option>
+        <ion-select-option *ngFor="let category of categories$ | async" [value]="category.id">
+          {{ category.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <div style="display: flex; gap: 0.5rem; margin-top: 2rem;">
       <ion-button type="submit" expand="block" color="primary">
         Guardar Cambios

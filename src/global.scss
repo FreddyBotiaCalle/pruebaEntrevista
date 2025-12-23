@@ -34,4 +34,15 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/**
+ * Light Theme Override
+ */
+html {
+  --ion-background-color: #ffffff;
+  --ion-text-color: #333333;
+  --ion-border-color: #e0e0e0;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #f9f9f9;
+}

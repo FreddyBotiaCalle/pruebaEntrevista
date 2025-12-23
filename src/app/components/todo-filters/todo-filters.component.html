@@ -5,6 +5,20 @@
   debounce="300"
 ></ion-searchbar>
 
+<div style="padding: 1rem 0;">
+  <ion-select
+    [value]="selectedCategoryId"
+    (ionChange)="onCategoryFilterChange($event.detail.value)"
+    placeholder="Filtrar por categoría"
+    style="width: 100%;"
+  >
+    <ion-select-option value="">Todas las categorías</ion-select-option>
+    <ion-select-option *ngFor="let category of categories$ | async" [value]="category.id">
+      {{ category.name }}
+    </ion-select-option>
+  </ion-select>
+</div>
+
 <ion-segment [value]="filterType" (ionChange)="onFilterChange($event.detail.value)">
   <ion-segment-button value="all">
     <ion-label>Todas</ion-label>

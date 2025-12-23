@@ -15,9 +15,23 @@
         <ion-label>
           <h2 [class.completed]="todo.completed">{{ todo.title }}</h2>
           <p *ngIf="todo.description">{{ todo.description }}</p>
-          <p *ngIf="todo.dueDate" style="font-size: 0.8rem; color: var(--ion-color-medium);">
-            Vencimiento: {{ formatDate(todo.dueDate) }}
-          </p>
+          
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+            <ion-badge 
+              *ngIf="getCategory(todo.categoryId)"
+              [style.background-color]="getCategory(todo.categoryId)?.color"
+              style="color: white;"
+            >
+              {{ getCategory(todo.categoryId)?.name }}
+            </ion-badge>
+            
+            <span 
+              *ngIf="todo.dueDate" 
+              style="font-size: 0.8rem; color: var(--ion-color-medium); background: #f0f0f0; padding: 0.25rem 0.5rem; border-radius: 4px;"
+            >
+              📅 {{ formatDate(todo.dueDate) }}
+            </span>
+          </div>
         </ion-label>
 
         <div slot="end" style="display: flex; gap: 0.5rem;">

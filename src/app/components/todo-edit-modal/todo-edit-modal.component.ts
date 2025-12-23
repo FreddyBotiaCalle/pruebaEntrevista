@@ -11,8 +11,13 @@ import {
   IonItem,
   IonLabel,
   ModalController,
+  IonSelect,
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 import { Todo, UpdateTodoDTO } from '../../models/todo.model';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-edit-modal',
@@ -28,6 +33,8 @@ import { Todo, UpdateTodoDTO } from '../../models/todo.model';
     IonInput,
     IonItem,
     IonLabel,
+    IonSelect,
+    IonSelectOption,
   ],
   templateUrl: './todo-edit-modal.component.html',
   styleUrls: ['./todo-edit-modal.component.scss'],
@@ -36,11 +43,15 @@ export class TodoEditModalComponent implements OnInit {
   @Input() todo!: Todo;
   editForm!: FormGroup;
   submitted = false;
+  categories$: Observable<Category[]>;
 
   constructor(
     private formBuilder: FormBuilder,
-    private modalController: ModalController
-  ) {}
+    private modalController: ModalController,
+    private categoryService: CategoryService
+  ) {
+    this.categories$ = this.categoryService.getCategories();
+  }
 
   ngOnInit() {
     this.initForm();
@@ -51,6 +62,7 @@ export class TodoEditModalComponent implements OnInit {
       title: [this.todo.title, [Validators.required, Validators.minLength(3)]],
       description: [this.todo.description || ''],
       dueDate: [this.todo.dueDate ? new Date(this.todo.dueDate).toISOString().split('T')[0] : ''],
+      categoryId: [this.todo.categoryId || ''],
     });
   }
 
@@ -70,6 +82,7 @@ export class TodoEditModalComponent implements OnInit {
       title: formValue.title.trim(),
       description: formValue.description?.trim(),
       dueDate: formValue.dueDate ? new Date(formValue.dueDate) : undefined,
+      categoryId: formValue.categoryId || undefined,
     };
 
     await this.modalController.dismiss(data, 'confirm');

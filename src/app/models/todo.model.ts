@@ -4,6 +4,7 @@ export interface Todo {
   description?: string;
   completed: boolean;
   dueDate?: Date;
+  categoryId?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,6 +13,7 @@ export interface CreateTodoDTO {
   title: string;
   description?: string;
   dueDate?: Date;
+  categoryId?: string;
 }
 
 export interface UpdateTodoDTO {
@@ -19,4 +21,5 @@ export interface UpdateTodoDTO {
   description?: string;
   completed?: boolean;
   dueDate?: Date;
+  categoryId?: string;
 }
