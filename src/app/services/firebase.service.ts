@@ -21,13 +21,13 @@ export class FirebaseService {
   // Ve a https://console.firebase.google.com → Tu proyecto → Configuración → General
   // y copia los valores de tu aplicación web
   private firebaseConfig = {
-    apiKey: 'YOUR_API_KEY_HERE',
-    authDomain: 'YOUR_PROJECT.firebaseapp.com',
-    projectId: 'YOUR_PROJECT_ID_HERE',
-    storageBucket: 'YOUR_PROJECT.appspot.com',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-    appId: 'YOUR_APP_ID_HERE',
-    measurementId: 'YOUR_MEASUREMENT_ID',
+    apiKey: 'AIzaSyCLwxf-W2ieHuoWIYs73Q4VewILCAixTXw',
+    authDomain: 'pruebaentrevista-e591d.firebaseapp.com',
+    projectId: 'pruebaentrevista-e591d',
+    storageBucket: 'pruebaentrevista-e591d.firebasestorage.app',
+    messagingSenderId: '248283337286',
+    appId: '1:248283337286:web:d58400b7507b0a9fe5f047',
+    measurementId: 'G-57PV2J46T7',
   };
 
   // Valores por defecto para los feature flags
