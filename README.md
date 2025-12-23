@@ -1,252 +1,281 @@
-# 📋 TODO App - Ionic Angular
+# 📱 Prueba Entrevista - Aplicación de Gestor de Tareas
 
-Aplicación de gestión de tareas desarrollada con **Ionic Framework** y **Angular**, utilizando patrones modernos y buenas prácticas de desarrollo.
+> Una aplicación moderna de gestor de tareas con Ionic 7, Angular 17 y Firebase Remote Config
 
-## ✨ Características
+## 🎯 Características Principales
 
-### Funcionalidades Principales
-- ✅ **Crear tareas** - Formulario reactivo con validaciones
-- ✅ **Listar tareas** - Visualización con detalles completos
-- ✅ **Editar tareas** - Modal interactivo para actualizar datos
-- ✅ **Eliminar tareas** - Con confirmación de usuario
-- ✅ **Marcar completadas** - Toggle de estado con confirmación visual
-- ✅ **Buscar tareas** - Búsqueda en tiempo real por título o descripción
-- ✅ **Filtrar tareas** - Por estado (Todas, Pendientes, Completadas)
-- ✅ **Limpiar completadas** - Eliminar todas las tareas terminadas
-- ✅ **Estadísticas** - Dashboard con métricas en tiempo real
+### ✅ Gestión de Tareas
+- ✨ Crear, editar, eliminar y marcar tareas como completadas
+- 🏷️ Asignar categorías a las tareas
+- 🔍 Buscar tareas por título
+- 📊 Filtrar por estado (todas, pendientes, completadas)
+- 🎨 Filtrar por categoría
+- 📈 Estadísticas en tiempo real (total, completadas, pendientes)
 
-### Características Técnicas
-- 📱 **Responsive Design** - Compatible con móvil, tablet y web
-- 💾 **Persistencia Local** - Ionic Storage para datos offline-first
-- 🎨 **Interfaz Moderna** - Componentes Ionic standalone
-- ⚡ **Reactive Forms** - Validaciones en tiempo real
-- 📦 **RxJS** - Gestión de estado reactivo
-- 🧪 **Unit Tests** - Cobertura de servicios y componentes
-- 🎯 **TypeScript** - Type-safe development
+### 📂 Gestión de Categorías
+- ✏️ Crear, editar y eliminar categorías
+- 🎨 Seleccionar color personalizado para cada categoría
+- 📝 Agregar descripción a las categorías
+- 🚀 Integración con sistema de tareas
+
+### 🔥 Firebase & Remote Config
+- ⚙️ Integración completa con Firebase
+- 🚩 Feature flags con Remote Config
+- 🔄 Actualización dinámica de configuración sin redeploy
+- 💾 Valores por defecto automáticos
+- 🔐 Fallback seguro si Firebase no está disponible
+
+### 🎨 Interfaz de Usuario
+- 📱 Responsive design optimizado para móviles
+- 🌟 Tema claro y moderno
+- ⚡ Animaciones fluidas
+- 📊 Indicadores visuales de estado
+- 🔔 Sistema de notificaciones integrado
+
+### 🛠️ Características Técnicas
+- 🏗️ Arquitectura modular y escalable
+- 📦 Componentes standalone de Angular
+- 🧪 Pruebas unitarias con Jasmine/Karma
+- 🌐 Interceptor HTTP personalizado
+- 📝 Sistema de logging estructurado
+- ✔️ Validación reactiva de formularios
+- 💾 Persistencia local con Ionic Storage
+
+## 🚀 Inicio Rápido
+
+### Requisitos Previos
+- Node.js 16+ y npm
+- Ionic CLI: `npm install -g @ionic/cli`
+- Cuenta de Firebase (opcional, para features avanzados)
+
+### Instalación
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/FreddyBotiaCalle/pruebaEntrevista.git
+cd pruebaEntrevista
+
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
+ionic serve
+```
+
+La aplicación estará disponible en `http://localhost:8100`
+
+## 🔥 Configuración de Firebase (Opcional)
+
+Para habilitar las características de Firebase y Remote Config:
+
+1. **Crear Proyecto Firebase**
+   - Ve a https://console.firebase.google.com
+   - Crea un nuevo proyecto
+
+2. **Obtener Credenciales**
+   - Registra tu aplicación web
+   - Copia las credenciales
+
+3. **Actualizar la Aplicación**
+   - Abre `src/app/services/firebase.service.ts`
+   - Reemplaza los valores en `firebaseConfig`
+
+4. **Configurar Remote Config**
+   - En Firebase Console → Build → Remote Config
+   - Crea los parámetros:
+     - `categoriesEnabled` (boolean)
+     - `maxTodosPerUser` (number)
+     - `enableNotifications` (boolean)
+     - `maintenanceMode` (boolean)
+
+Para más detalles, consulta [FIREBASE_SETUP.md](./FIREBASE_SETUP.md)
+
+## 📚 Documentación
+
+| Documento | Descripción |
+|-----------|-------------|
+| [FIREBASE_SETUP.md](./FIREBASE_SETUP.md) | Guía completa de configuración Firebase |
+| [FIREBASE_INTEGRATION_SUMMARY.md](./FIREBASE_INTEGRATION_SUMMARY.md) | Resumen de cambios y cómo usar |
+| [FEATURE_FLAGS_EXAMPLES.md](./FEATURE_FLAGS_EXAMPLES.md) | 12 ejemplos prácticos de feature flags |
+| [DEVELOPMENT.md](./DEVELOPMENT.md) | Guía de desarrollo y estructura del proyecto |
 
 ## 🏗️ Estructura del Proyecto
 
 ```
-src/app/
-├── pages/
-│   └── home/                    # Página principal
-│       ├── home.page.ts
-│       ├── home.page.html
-│       └── home.page.scss
-├── components/
-│   ├── todo-form/               # Formulario para crear tareas
-│   ├── todo-list/               # Lista de tareas
-│   ├── todo-filters/            # Búsqueda y filtros
-│   └── todo-edit-modal/         # Modal de edición
-├── services/
-│   ├── todo.service.ts          # Lógica CRUD
-│   └── notification.service.ts  # Alertas y notificaciones
-├── models/
-│   └── todo.model.ts            # Interfaces y tipos
-├── app.module.ts                # Bootstrap
-├── app-routing.module.ts        # Configuración de rutas
-└── app.component.ts             # Componente raíz
+src/
+├── app/
+│   ├── components/          # Componentes reutilizables
+│   │   ├── todo-form/
+│   │   ├── todo-list/
+│   │   ├── todo-filters/
+│   │   ├── todo-edit-modal/
+│   │   ├── category-list/
+│   │   ├── category-modal/
+│   │   └── feature-flags/
+│   ├── pages/               # Páginas de la aplicación
+│   │   └── home/
+│   ├── services/            # Servicios
+│   │   ├── todo.service.ts
+│   │   ├── category.service.ts
+│   │   ├── firebase.service.ts
+│   │   ├── notification.service.ts
+│   │   ├── logger.service.ts
+│   │   └── validation.service.ts
+│   ├── models/              # Interfaces y tipos
+│   │   ├── todo.model.ts
+│   │   └── category.model.ts
+│   ├── core/                # Módulos, guardias, interceptores
+│   │   ├── guards/
+│   │   ├── interceptors/
+│   │   └── helpers/
+│   ├── app.routes.ts        # Configuración de rutas
+│   └── app.component.ts     # Componente raíz
+├── assets/                  # Recursos estáticos
+├── theme/                   # Temas de SCSS
+└── main.ts                  # Bootstrap de la aplicación
 ```
 
-## 🚀 Instalación y Ejecución
+## 🎮 Cómo Usar
 
-### Requisitos
-- Node.js >= 16.0.0
-- npm >= 8.0.0
-- Ionic CLI (opcional): `npm install -g @ionic/cli`
+### Crear una Tarea
+1. Completa el formulario en "Crear Tarea"
+2. (Opcional) Selecciona una categoría
+3. Haz clic en "Crear Tarea"
 
-### Pasos
+### Editar una Tarea
+1. Haz clic en el ícono de lápiz en la tarea
+2. Modifica los campos
+3. Guarda los cambios
 
-1. **Instalar dependencias:**
+### Eliminar una Tarea
+1. Haz clic en el ícono de papelera
+2. Confirma la eliminación
+
+### Filtrar Tareas
+1. Usa la barra de búsqueda para filtrar por título
+2. Selecciona estado: Todas, Pendientes o Completadas
+3. Selecciona una categoría para filtrar
+
+### Gestionar Categorías
+1. Haz clic en "Nueva Categoría"
+2. Selecciona un color y agrega nombre/descripción
+3. Usa las categorías en tus tareas
+
+### Monitorear Feature Flags
+1. Mira la sección "Feature Flags" en la página
+2. Haz clic en "Refrescar desde Firebase" para actualizar
+3. El estado se refleja inmediatamente en la interfaz
+
+## 🔄 Feature Flags Disponibles
+
+| Flag | Tipo | Descripción | Por Defecto |
+|------|------|-------------|------------|
+| `categoriesEnabled` | boolean | Habilita/deshabilita categorías | true |
+| `maxTodosPerUser` | number | Límite de tareas por usuario | 100 |
+| `enableNotifications` | boolean | Activa/desactiva notificaciones | true |
+| `maintenanceMode` | boolean | Modo de mantenimiento | false |
+
+## 🧪 Pruebas
+
 ```bash
-npm install
-```
-
-2. **Ejecutar en desarrollo:**
-```bash
-ionic serve
-# o
-npm start
-```
-
-3. **Abrir en el navegador:**
-```
-http://localhost:4200
-```
-
-## 🧪 Tests
-
-### Ejecutar tests unitarios
-```bash
+# Ejecutar todas las pruebas
 npm test
+
+# Pruebas con coverage
+ng test --code-coverage
+
+# Pruebas en CI mode (una sola ejecución)
+ng test --watch=false
 ```
 
-### Ejecutar tests con cobertura
-```bash
-npm test -- --code-coverage
-```
-
-### Tests incluidos
-- **TodoService** - CRUD completo, filtrados, estadísticas
-- **TodoFormComponent** - Validaciones de formulario
-- Operaciones de creación, actualización y eliminación
-
-## 📦 Dependencias Principales
-
-```json
-{
-  "@angular/core": "^17.x",
-  "@angular/forms": "^17.x",
-  "@ionic/angular": "^7.x",
-  "@ionic/storage-angular": "^4.0.0",
-  "rxjs": "^7.x",
-  "typescript": "^5.x"
-}
-```
-
-## 🎯 Modelos de Datos
-
-### Todo
-```typescript
-interface Todo {
-  id: string;              // ID único generado
-  title: string;           // Título de la tarea (requerido)
-  description?: string;    // Descripción opcional
-  completed: boolean;      // Estado de completación
-  dueDate?: Date;         // Fecha de vencimiento opcional
-  createdAt: Date;        // Fecha de creación
-  updatedAt: Date;        // Última actualización
-}
-```
-
-### DTOs
-```typescript
-interface CreateTodoDTO {
-  title: string;
-  description?: string;
-  dueDate?: Date;
-}
-
-interface UpdateTodoDTO {
-  title?: string;
-  description?: string;
-  completed?: boolean;
-  dueDate?: Date;
-}
-```
-
-## 🔑 Métodos Principales
-
-### TodoService
-
-#### CRUD
-- `createTodo(data: CreateTodoDTO): Promise<Todo>`
-- `getTodos(): Observable<Todo[]>`
-- `getTodo(id: string): Todo | undefined`
-- `updateTodo(id: string, data: UpdateTodoDTO): Promise<Todo>`
-- `deleteTodo(id: string): Promise<void>`
-
-#### Operaciones
-- `toggleTodo(id: string): Promise<Todo>`
-- `clearCompleted(): Promise<void>`
-- `filterTodos(todos: Todo[], searchTerm: string, filterType): Todo[]`
-- `getStats(): { total, completed, pending }`
-
-### NotificationService
-
-- `showToast(message, color, position, duration)`
-- `showConfirmation(title, message, confirmText, cancelText)`
-- `showAlert(title, message, okText)`
-- `showSuccess(message)` - Atajo para éxito
-- `showError(message)` - Atajo para error
-- `showWarning(message)` - Atajo para advertencia
-
-## 💾 Persistencia
-
-Los datos se guardan automáticamente en el almacenamiento local usando **Ionic Storage**:
-- Los datos persisten entre sesiones del usuario
-- Funciona en modo offline
-- Se sincroniza automáticamente en cada cambio
-
-## 🎨 Estilos y Temas
-
-El proyecto utiliza:
-- **CSS variables de Ionic** - Temas predefinidos
-- **SCSS** - Para estilos componentes
-- **CSS Grid/Flexbox** - Layouts responsivos
-
-### Colores principales
-- Primary: Azul (#3880ff)
-- Success: Verde (#2dd36f)
-- Warning: Amarillo (#ffc409)
-- Danger: Rojo (#eb445a)
-
-## 🔐 Validaciones
-
-### Formulario de Tareas
-- Título: Requerido, mínimo 3 caracteres
-- Descripción: Opcional, máximo 500 caracteres
-- Fecha: Opcional, formato ISO
-
-### Confirmaciones
-- Eliminar tarea: Requiere confirmación
-- Eliminar completadas: Requiere confirmación
-- Cambios importantes: Modal feedback
-
-## 📱 Capacitor (Mobile)
-
-Para compilar a Android/iOS:
+## 📦 Build para Producción
 
 ```bash
-# Agregar plataformas
-ionic cap add android
-ionic cap add ios
-
-# Compilar para web
+# Build optimizado
 npm run build
 
-# Sincronizar cambios
-ionic cap sync
-
-# Abrir en Android Studio / Xcode
-ionic cap open android
-ionic cap open ios
+# Salida en carpeta 'www/'
 ```
 
-## 📊 Estadísticas de la App
+## 🔐 Seguridad
 
-- **Componentes**: 4 componentes standalone
-- **Servicios**: 2 servicios inyectables
-- **Líneas de código**: ~1500 LOC
-- **Cobertura de tests**: >80%
-- **Métodos disponibles**: 20+ operaciones
+- ✅ Validación de entrada en formularios
+- ✅ Interceptor HTTP para manejo de errores
+- ✅ LocalStorage encriptado con Ionic Storage
+- ⚠️ NO commits credenciales de Firebase (usar variables de entorno)
+- ✅ Fallback seguro a valores por defecto
 
-## 🛠️ Desarrollo
+## 🐛 Troubleshooting
 
-### Agregar una nueva funcionalidad
+### La aplicación muestra pantalla en blanco
+- Limpia el caché: `ionic serve --cleanup`
+- Verifica la consola del navegador para errores
 
-1. Agregar método al `TodoService`
-2. Crear componente o actualizar existente
-3. Agregar tests unitarios
-4. Actualizar la interfaz `Todo` si es necesario
-5. Documentar cambios
+### Los feature flags no se actualizan
+- Verifica que Firebase esté correctamente configurado
+- Revisa que los parámetros en Remote Config coincidan exactamente
+- Haz clic en "Refrescar desde Firebase"
 
-### Convenciones
-- Usar `async/await` para operaciones asincrónicas
-- Componentes standalone sin módulos
-- Usar Reactive Forms
-- Documentar métodos públicos con JSDoc
+### Las tareas no se guardan
+- Verifica que Ionic Storage esté inicializado
+- Revisa el almacenamiento local en DevTools (Application tab)
+
+Para más ayuda, consulta [FIREBASE_SETUP.md](./FIREBASE_SETUP.md#troubleshooting)
+
+## 🤝 Contribuir
+
+Las contribuciones son bienvenidas. Para cambios importantes:
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
 ## 📝 Licencia
 
-Este proyecto es parte de una prueba técnica para desarrollador Mobile.
+Este proyecto está bajo la licencia MIT - ver archivo [LICENSE](LICENSE) para más detalles.
 
-## 👤 Autor
+## 👨‍💻 Autor
 
-Desarrollado como aplicación Ionic completa con Angular.
+**Freddy Botía Calle**
+- GitHub: [@FreddyBotiaCalle](https://github.com/FreddyBotiaCalle)
+- Repositorio: [pruebaEntrevista](https://github.com/FreddyBotiaCalle/pruebaEntrevista)
+
+## 📞 Soporte
+
+- 📖 [Documentación Ionic](https://ionicframework.com/docs)
+- 📖 [Documentación Angular](https://angular.io/docs)
+- 🔥 [Documentación Firebase](https://firebase.google.com/docs)
+- 🔥 [Angular Fire](https://github.com/angular/angularfire)
+
+## ✨ Cambios Recientes
+
+### v2.0.0 - Firebase & Remote Config (Último)
+- 🔥 Integración completa de Firebase
+- 🚩 Sistema de feature flags con Remote Config
+- 📱 Componente FeatureFlagsComponent para monitorear flags
+- 📚 Documentación completa de configuración
+- 🔄 Actualización dinámica sin redeploy
+- 💾 Fallback automático a valores por defecto
+
+### v1.0.0 - Release Inicial
+- ✅ Gestión completa de tareas (CRUD)
+- 📂 Gestión de categorías
+- 🔍 Búsqueda y filtrado
+- 🧪 Pruebas unitarias
+- 📝 Logging estructurado
+- 🎨 Tema claro y responsivo
+
+## 🎯 Próximos Pasos
+
+- [ ] Autenticación de usuarios con Firebase Auth
+- [ ] Sincronización en tiempo real con Firestore
+- [ ] A/B Testing con feature flags
+- [ ] Analytics avanzados
+- [ ] Aplicación nativa con Capacitor
+- [ ] PWA completo para offline-first
 
 ---
 
-**Versión**: 1.0.0  
-**Última actualización**: Diciembre 2025  
-**Estado**: ✅ Completo y funcional
+**Hecho con ❤️ usando Ionic, Angular y Firebase**
