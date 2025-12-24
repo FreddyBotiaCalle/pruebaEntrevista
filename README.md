@@ -135,7 +135,7 @@ src/
 └── main.ts                  # Bootstrap de la aplicación
 ```
 
-## 🎮 Cómo Usar
+## Cómo Usar
 
 ### Crear una Tarea
 1. Completa el formulario en "Crear Tarea"
