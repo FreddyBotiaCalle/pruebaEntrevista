@@ -1,47 +1,47 @@
-# 📱 Prueba Entrevista - Aplicación de Gestor de Tareas
+# Prueba Entrevista - Aplicación de Gestor de Tareas
 
 > Una aplicación moderna de gestor de tareas con Ionic 7, Angular 17 y Firebase Remote Config
 
-## 🎯 Características Principales
+## Características Principales
 
-### ✅ Gestión de Tareas
-- ✨ Crear, editar, eliminar y marcar tareas como completadas
-- 🏷️ Asignar categorías a las tareas
-- 🔍 Buscar tareas por título
-- 📊 Filtrar por estado (todas, pendientes, completadas)
-- 🎨 Filtrar por categoría
-- 📈 Estadísticas en tiempo real (total, completadas, pendientes)
+### Gestión de Tareas
+- Crear, editar, eliminar y marcar tareas como completadas
+- Asignar categorías a las tareas
+- Buscar tareas por título
+- Filtrar por estado (todas, pendientes, completadas)
+- Filtrar por categoría
+- Estadísticas en tiempo real (total, completadas, pendientes)
 
-### 📂 Gestión de Categorías
-- ✏️ Crear, editar y eliminar categorías
-- 🎨 Seleccionar color personalizado para cada categoría
-- 📝 Agregar descripción a las categorías
-- 🚀 Integración con sistema de tareas
+### Gestión de Categorías
+- Crear, editar y eliminar categorías
+- Seleccionar color personalizado para cada categoría
+- Agregar descripción a las categorías
+- Integración con sistema de tareas
 
-### 🔥 Firebase & Remote Config
-- ⚙️ Integración completa con Firebase
-- 🚩 Feature flags con Remote Config
-- 🔄 Actualización dinámica de configuración sin redeploy
-- 💾 Valores por defecto automáticos
-- 🔐 Fallback seguro si Firebase no está disponible
+### Firebase & Remote Config
+- Integración completa con Firebase
+- Feature flags con Remote Config
+- Actualización dinámica de configuración sin redeploy
+- Valores por defecto automáticos
+- Fallback seguro si Firebase no está disponible
 
-### 🎨 Interfaz de Usuario
-- 📱 Responsive design optimizado para móviles
-- 🌟 Tema claro y moderno
-- ⚡ Animaciones fluidas
-- 📊 Indicadores visuales de estado
-- 🔔 Sistema de notificaciones integrado
+### Interfaz de Usuario
+- Responsive design optimizado para móviles
+- Tema claro y moderno
+- Animaciones fluidas
+- Indicadores visuales de estado
+- Sistema de notificaciones integrado
 
-### 🛠️ Características Técnicas
-- 🏗️ Arquitectura modular y escalable
-- 📦 Componentes standalone de Angular
-- 🧪 Pruebas unitarias con Jasmine/Karma
-- 🌐 Interceptor HTTP personalizado
-- 📝 Sistema de logging estructurado
-- ✔️ Validación reactiva de formularios
-- 💾 Persistencia local con Ionic Storage
+### Características Técnicas
+- Arquitectura modular y escalable
+- Componentes standalone de Angular
+- Pruebas unitarias con Jasmine/Karma
+- Interceptor HTTP personalizado
+- Sistema de logging estructurado
+- Validación reactiva de formularios
+- Persistencia local con Ionic Storage
 
-## 🚀 Inicio Rápido
+## Inicio Rápido
 
 ### Requisitos Previos
 - Node.js 16+ y npm
@@ -64,7 +64,7 @@ ionic serve
 
 La aplicación estará disponible en `http://localhost:8100`
 
-## 🔥 Configuración de Firebase (Opcional)
+## Configuración de Firebase (Opcional)
 
 Para habilitar las características de Firebase y Remote Config:
 
@@ -90,7 +90,7 @@ Para habilitar las características de Firebase y Remote Config:
 
 Para más detalles, consulta [FIREBASE_SETUP.md](./FIREBASE_SETUP.md)
 
-## 📚 Documentación
+## Documentación
 
 | Documento | Descripción |
 |-----------|-------------|
@@ -99,7 +99,7 @@ Para más detalles, consulta [FIREBASE_SETUP.md](./FIREBASE_SETUP.md)
 | [FEATURE_FLAGS_EXAMPLES.md](./FEATURE_FLAGS_EXAMPLES.md) | 12 ejemplos prácticos de feature flags |
 | [DEVELOPMENT.md](./DEVELOPMENT.md) | Guía de desarrollo y estructura del proyecto |
 
-## 🏗️ Estructura del Proyecto
+##  Estructura del Proyecto
 
 ```
 src/
@@ -166,7 +166,7 @@ src/
 2. Haz clic en "Refrescar desde Firebase" para actualizar
 3. El estado se refleja inmediatamente en la interfaz
 
-## 🔄 Feature Flags Disponibles
+## Feature Flags Disponibles
 
 | Flag | Tipo | Descripción | Por Defecto |
 |------|------|-------------|------------|
@@ -175,7 +175,7 @@ src/
 | `enableNotifications` | boolean | Activa/desactiva notificaciones | true |
 | `maintenanceMode` | boolean | Modo de mantenimiento | false |
 
-## 🧪 Pruebas
+## Pruebas
 
 ```bash
 # Ejecutar todas las pruebas
@@ -188,7 +188,7 @@ ng test --code-coverage
 ng test --watch=false
 ```
 
-## 📦 Build para Producción
+## Build para Producción
 
 ```bash
 # Build optimizado
@@ -197,15 +197,15 @@ npm run build
 # Salida en carpeta 'www/'
 ```
 
-## 🔐 Seguridad
+## Seguridad
 
-- ✅ Validación de entrada en formularios
-- ✅ Interceptor HTTP para manejo de errores
-- ✅ LocalStorage encriptado con Ionic Storage
-- ⚠️ NO commits credenciales de Firebase (usar variables de entorno)
-- ✅ Fallback seguro a valores por defecto
+- Validación de entrada en formularios
+- Interceptor HTTP para manejo de errores
+- LocalStorage encriptado con Ionic Storage
+- NO commits credenciales de Firebase (usar variables de entorno)
+- Fallback seguro a valores por defecto
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### La aplicación muestra pantalla en blanco
 - Limpia el caché: `ionic serve --cleanup`
@@ -222,7 +222,7 @@ npm run build
 
 Para más ayuda, consulta [FIREBASE_SETUP.md](./FIREBASE_SETUP.md#troubleshooting)
 
-## 🤝 Contribuir
+## Contribuir
 
 Las contribuciones son bienvenidas. Para cambios importantes:
 
@@ -232,42 +232,42 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📝 Licencia
+## Licencia
 
 Este proyecto está bajo la licencia MIT - ver archivo [LICENSE](LICENSE) para más detalles.
 
-## 👨‍💻 Autor
+## Autor
 
 **Freddy Botía Calle**
 - GitHub: [@FreddyBotiaCalle](https://github.com/FreddyBotiaCalle)
 - Repositorio: [pruebaEntrevista](https://github.com/FreddyBotiaCalle/pruebaEntrevista)
 
-## 📞 Soporte
+## Soporte
 
-- 📖 [Documentación Ionic](https://ionicframework.com/docs)
-- 📖 [Documentación Angular](https://angular.io/docs)
-- 🔥 [Documentación Firebase](https://firebase.google.com/docs)
-- 🔥 [Angular Fire](https://github.com/angular/angularfire)
+- [Documentación Ionic](https://ionicframework.com/docs)
+- [Documentación Angular](https://angular.io/docs)
+- [Documentación Firebase](https://firebase.google.com/docs)
+- [Angular Fire](https://github.com/angular/angularfire)
 
-## ✨ Cambios Recientes
+## Cambios Recientes
 
 ### v2.0.0 - Firebase & Remote Config (Último)
-- 🔥 Integración completa de Firebase
-- 🚩 Sistema de feature flags con Remote Config
-- 📱 Componente FeatureFlagsComponent para monitorear flags
-- 📚 Documentación completa de configuración
-- 🔄 Actualización dinámica sin redeploy
-- 💾 Fallback automático a valores por defecto
+- Integración completa de Firebase
+- Sistema de feature flags con Remote Config
+- Componente FeatureFlagsComponent para monitorear flags
+- Documentación completa de configuración
+- Actualización dinámica sin redeploy
+- Fallback automático a valores por defecto
 
 ### v1.0.0 - Release Inicial
-- ✅ Gestión completa de tareas (CRUD)
-- 📂 Gestión de categorías
-- 🔍 Búsqueda y filtrado
-- 🧪 Pruebas unitarias
-- 📝 Logging estructurado
-- 🎨 Tema claro y responsivo
+- Gestión completa de tareas (CRUD)
+- Gestión de categorías
+- Búsqueda y filtrado
+- Pruebas unitarias
+- Logging estructurado
+- Tema claro y responsivo
 
-## 🎯 Próximos Pasos
+## Próximos Pasos
 
 - [ ] Autenticación de usuarios con Firebase Auth
 - [ ] Sincronización en tiempo real con Firestore
@@ -278,4 +278,4 @@ Este proyecto está bajo la licencia MIT - ver archivo [LICENSE](LICENSE) para m
 
 ---
 
-**Hecho con ❤️ usando Ionic, Angular y Firebase**
+**Hecho con usando Ionic, Angular y Firebase**
